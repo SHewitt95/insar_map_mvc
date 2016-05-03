@@ -315,7 +315,10 @@
 
         <button class="accordion">Instructions</button>
         <div class="panel">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <ul>
+            <li>Upload your h5 file with the upload button below. </li>
+            <li>Select any point on the map to display its line displacement in the chart below.</li>
+          </ul>
         </div> <!-- End panel -->
 
         <!--<button class="accordion">Creators</button>
