@@ -156,13 +156,6 @@ function Map(loadJSONFunc) {
             var feature = features[0];
             var title = feature.properties.title;
 
-            // // the features array seems to have a copy of the actual features, and not the real original
-            // // features that were added. Thus, I use the title of the feature as a key to lookup the
-            // // pointer to the actual feature we added, so changes made to it can be seen on the map.
-            // // that is just a test, so whenever a marker is clicked, the marker symbol is changed to a
-            // // different one before showing it's information in a popup.
-            // var actualFeature = that.geoDataMap[title];
-
             // load displacements from server, and then show on graph
             loadJSONFunc(title, "point", function(response) {
                 var json = JSON.parse(response);
