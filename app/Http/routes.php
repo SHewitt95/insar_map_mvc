@@ -17,3 +17,6 @@
 
 Route::get('/', 'MyController@returnPage')->name('returnPage');
 Route::post('/data', 'MyController@convertData')->name('convertData');
+Route::get("/file/{area}/{fileChunkNumber}", "GeoJSONController@getJSONFileChunk")->name("getJSONFileChunk");
+Route::get("/point/{area}/{point}", "GeoJSONController@getDataForPoint")->name("getDataForPoint");
+Route::get("/areas/", "GeoJSONController@getAreas")->name("getAreas");

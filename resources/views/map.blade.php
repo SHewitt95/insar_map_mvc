@@ -2,6 +2,7 @@
 <html>
 <head>
  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+ <link rel="stylesheet" href="css/mainPage.css" />
  <!--jQuery-->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
  <!--leaflet-->
@@ -14,294 +15,34 @@
     <script src="https://code.jquery.com/jquery-1.12.2.js"></script>
     <!--script src='/geojson-vt-dev.js'></script-->
     <!--script type="text/javascript" src='scripts.js'></script-->
-    <link href="vendor/mapbox-gl-draw.css" rel="stylesheet" />
-    <script type="text/javascript" src="vendor/mapbox-gl-draw.js"></script>
+    <link href="vendor/mapbox-gl-draw.css" rel="stylesheet" />    <script type="text/javascript" src="vendor/mapbox-gl-draw.js"></script>
     <script type="text/javascript" src="js/regression.js"></script>
     <script type="text/javascript" src="js/canvasjs.min.js"></script>
-    <style>
-      @import url(https://fonts.googleapis.com/css?family=Carter+One);
-
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%
-      }
-
-      .page-container {
-        position: relative;
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-
-      .side-bar {
-        float: left;
-        height: 100%;
-        width: 33%;
-        background-color: rgb(4,53,101);
-        z-index: 10;
-        overflow: auto;
-      }
-
-      .side-item-box {
-        display: block;
-        width: 90%;
-        margin: 1em auto;
-      }
-
-      .side-item {
-        display: block;
-        /*margin: 1em auto;*/
-        width: 100%;
-        height: 50px;
-        /*background-color: black;*/
-      }
-
-      .side-item.title, .side-item.upload-button, .side-item.description {
-        /*background-color: white;*/
-      }
-
-      .side-item.graph {
-
-        height: 250px;
-        background-color: black;
-        margin-bottom: 20px;
-      }
-
-      #chart {
-        width: 100%;
-        height: 100%;
-      }
-
-      .move-button {
-        width: 15%;
-        margin-left: 90%;
-      }
-
-      #map-container {
-        width: 67%;
-        height: 100%;
-        /*position: absolute;*/
-        z-index: 0;
-        float: right;
-      }
-
-      #map {
-        width: 100%;
-        height: 100%;
-      }
-
-      h1.title {
-        font-size: 32px;
-        margin-bottom: 2em;
-      }
-
-      h1{
-        font-family: 'Carter One', cursive;
-        color: coral;
-
-      }
-
-      h2{
-        font-family: 'Carter One', cursive;
-        margin-top: 20px;
-        color: coral;
-      }
-
-      label{
-        color: coral;
-        font-family: 'Carter One', cursive;
-      }
-
-      #input{
-        color: coral;
-        font-family: 'Carter One', cursive;
-      }
-
-        /*.accordion,
-        .accordion dt,
-        .accordion dd,
-        .accordion figure{
-
-          margin:0;
-          padding:0;
-        }*/
-
-        .accordion{
-
-          background: DeepSkyBlue;
-          border-bottom: 1px solid DodgerBlue;
-          border-radius: 7px 7px 0 0;
-          color:white;
-          font-size: 1.5em;
-          margin-top: 0.222em;
-          padding: 0.5em 1em;
-        }
-
-        .accordion dd{
-
-          border:1px solid DeepSkyBlue;
-          border-top: none;
-          border-radius: 0 0 7px 7px;
-          paddig: 1em;
-        }
-
-        button.accordion {
-          /*background-color: #eee;
-          color: #444;*/
-          background-color: DeepSkyBlue;
-          border-bottom: 1px solid DodgerBlue;
-          cursor: pointer;
-          padding: 18px;
-          width: 100%;
-          border: none;
-          text-align: left;
-          outline: none;
-          font-size: 15px;
-          transition: 0.4s;
-        }
-
-        button.accordion.active, button.accordion:hover {
-          background-color: orange;
-          color:black;
-        }
-
-        div.panel {
-          padding: 0 18px;
-          display: none;
-          color: white;
-          border: 1 px solid orange;
-        }
-
-        div.panel.show {
-
-          border: 1px solid orange;
-          display: block !important;
-          color:white;
-        }
-
-        button{
-          font-family: 'Carter One', cursive;
-        }
-
-        p.ul{
-          color:black;
-        }
-
-        div.menu{
-
-          margin-top: 2em;
-
-        }
-
-        #map-type-menu {
-          padding: 10px;
-          font-family: 'Open Sans', sans-serif;
-          margin-top:4em;
-        }
-
-        .logos{
-         margin:2em;   
-       }
-
-       .logo2{
-        margin-left: 4em;   
-      }
-
-      label{
-       color:white;
-     }
-
-     .funding{
-      color:white;
-      margin-left: 2em;
-    }
-
-    #map-type-menu input[type="radio"]:checked + label {
-      color: coral;
-    }
-
-    .overlay_toggle>*{
-      display: inline-block;
-      float: left;
-    }
-
-    .toggle-button { 
-      background-color: white;
-      margin: 5px 0;
-      border-radius: 20px;
-      border: 2px solid #D0D0D0;
-      height: 14px;
-      cursor: pointer;
-      width: 50px;
-      position: relative;
-      display: inline-block;
-      user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      -moz-user-select: none; 
-      margin-left: 2em;
-    }
-
-    .toggle-button button { 
-      cursor: pointer;
-      outline: 0;
-      display:block;
-      position: absolute;
-      left: 0;
-      top: 0;
-      border-radius: 100%;
-      width: 20px;
-      height: 20px;
-      background-color: white;
-      float: left;
-      margin: -3px 0 0 -3px;
-      border: 2px solid #D0D0D0;
-      transition: left 0.3s; 
-    }
-
-    .toggle-button-selected { 
-     background-color: coral; border: 2px solid coral;
-   }
-
-   .toggle-button-selected button {
-    left: 37px;
-    top: 0;
-    margin: 0;
-    border: none;
-    width: 20px;
-    height: 22px;
-    box-shadow: 0 0 0px rgba(0,0,0,0.1); 
-  }
-
-</style>
-</head>
-<body>
-  <div id="map-container">
-  </div>
-  <div class="side-bar">
-    <div class="side-item-box">
-      <!--div class="side-item move-button"></div-->
-      <div class="side-item title">
-        <h1>University of Miami’s inSAR Time Series Viewer</h1>
-      </div>
-      <br><br>
-      <div id="map-type-menu">
-        <input id='basic' type='radio' name='rtoggle' value='basic' checked='checked'>
-        <label for='basic'>basic</label>
-        <input id='streets' type='radio' name='rtoggle' value='streets'>
-        <label for='streets'>streets</label>
-        <input id='satellite' type='radio' name='rtoggle' value='satellite'>
-        <label for='satellite'>satellite</label>
-      </div>
-      <div class="overlay_toggle"> 
-        <label>Turn on/off data overlay</label>
-        <div class="toggle-button">     
-          <button></button> 
+  </head>
+  <body>
+    <div id="map-container">
+    </div>
+    <div class="side-bar">
+      <div class="side-item-box">
+        <!--div class="side-item move-button"></div-->
+        <div class="side-item title">
+          <h1>University of Miami’s inSAR Time Series Viewer</h1>
         </div>
-      </div>
+        <br><br>
+        <div id="map-type-menu">
+          <input id='basic' type='radio' name='rtoggle' value='basic' checked='checked'>
+          <label for='basic'>basic</label>
+          <input id='streets' type='radio' name='rtoggle' value='streets'>
+          <label for='streets'>streets</label>
+          <input id='satellite' type='radio' name='rtoggle' value='satellite'>
+          <label for='satellite'>satellite</label>
+        </div>
+        <div class="overlay_toggle">
+          <label>Turn on/off data overlay</label>
+          <div class="toggle-button">
+            <button></button>
+          </div>
+        </div>
       <!--<div class="side-item description">
         <p>Description of inSAR map web application.</p>
       </div>-->
@@ -354,9 +95,25 @@
         {!! Form::close() !!}
 
       </div>
-      <p class="funding">The UM geodesy lab is funded by NASA and NSF. This website resulted from Spring 2016 CSC 431 class. The student designers and programmers were Jeffrey Lin, Krystina Scott, Milen Buchillon-Triff,Sherman Hewitt, Xavier Aballa, Zishi Wu, and Alfredo Terrero.</p>  
-      <div class="logos">     
-        <img src="img/nasa.png" alt="nasa_logo" height="100px" width="auto"> 
+      <!--insert pop up button for selecting areas to view here-->
+      <div class='wrap'>
+        <div class='content'>
+        <!-- table to select dataset from-->
+          <table class='table' id='myTable'>
+            <thead>
+              <tr>
+                <th>Dataset</th>
+              </tr>
+            </thead>
+            <tbody id='tableBody'></tbody>
+          </table>
+          </div>
+      </div>
+      <button><a class='button glyphicon glyphicon-plus' id="popupButton" href='#'>Select Area</a></button>
+
+      <p class="funding">The UM geodesy lab is funded by NASA and NSF. This website resulted from Spring 2016 CSC 431 class. The student designers and programmers were Jeffrey Lin, Krystina Scott, Milen Buchillon-Triff,Sherman Hewitt, Xavier Aballa, Zishi Wu, and Alfredo Terrero.</p>
+      <div class="logos">
+        <img src="img/nasa.png" alt="nasa_logo" height="100px" width="auto">
         <img src="img/nsf1.gif" alt="nsf_logo" height="100px" width="auto" class="logo2">
       </div>
     </div> <!-- End side-item-box -->
@@ -408,9 +165,49 @@
     }
     var toggleState = ToggleStates.ON;
 
+    function getGEOJSON(area) {
+      currentPoint = 1;
+      currentArea = area;
+
+      var query = {
+        "area": area,
+        "fileChunk": currentPoint
+      }
+
+      loadJSON(query, "file", myMap.JSONCallback);
+    }
     // when site loads, turn toggle on
     $(window).load(function() {
       $(".toggle-button").toggleClass('toggle-button-selected');
+      $('#popupButton').on('click', function() {
+        $('.wrap, #popupButton').toggleClass('active');
+
+        // get json response and put it in a table
+        loadJSON("", "areas", function(response) {         
+          var json = JSON.parse(response);
+
+          // add our info in a table, first remove any old info
+          $(".wrap").find(".content").find("#myTable").find("#tableBody").empty();
+          for (var i = 0; i < json.length; i++) {
+            var curArray = json[i];
+            var subDirectories = curArray[0].split("/");
+            var dirName = subDirectories[subDirectories.length - 1];
+            var dirFullName = curArray[0];
+            var dirSize = curArray[1];
+                       
+            $("#tableBody").append("<tr id=" + dirName +  "><td value='" + dirFullName + "''>" + dirName + "</td></tr>");
+
+            // make cursor change when mouse hovers over row
+            $("#" + dirName + "").css("cursor", "pointer");
+            // set the on click callback function for this row
+            $("#" + dirName + "").click(function() {
+              $('.wrap, #popupButton').toggleClass('active');
+              getGEOJSON(dirName);
+            });
+          }
+        });
+        return false;
+      });
     });
     /*TOGGLE BUTTON*/
     $(document).on('click', '.toggle-button', function() {
@@ -429,17 +226,17 @@
           var id = myMap.layers[i];
 
           myMap.map.addLayer({
-              "id": id,
-              "interactive": true,
-              "type": "symbol",
-              "source": id,
-              "layout": {
-                "icon-image": "{marker-symbol}",
-                "icon-allow-overlap": true,
+            "id": id,
+            "interactive": true,
+            "type": "symbol",
+            "source": id,
+            "layout": {
+              "icon-image": "{marker-symbol}",
+              "icon-allow-overlap": true,
                 "icon-size": 0.1 // notice the bigger size at smaller zoom levels.
-            }
-          });
-        }  
+              }
+            });
+        }
       } else {
         for (var i = 0; i < myMap.layers.length; i++) {
           var id = myMap.layers[i];

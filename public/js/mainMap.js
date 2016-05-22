@@ -9,6 +9,7 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 }).addTo(map);*/
 
 var currentPoint = 1;
+var currentArea = null;
 var file = "/home/vagrant/code/insar_map_mvc/public/json/geo_timeseries_masked.h5test_chunk_";
 
 // falk's date string is in format yyyymmdd - ex: 20090817 
@@ -69,8 +70,7 @@ function Map(loadJSONFunc) {
     };
 
     this.JSONCallback = function(response) {
-        // that function is called once the AJAX loads the geojson
-
+        // that function is called once the AJAX loads the geojson        
         geodata = JSON.parse(response); // put response geojson string into a js object
 
         // example loop to show how we can change the geodata JSON object at runtime with code
@@ -110,7 +110,10 @@ function Map(loadJSONFunc) {
             }
         });
         currentPoint++;
-        var fileToLoad = currentPoint.toString();
+        var fileToLoad = {
+            "area": currentArea,
+            "fileChunk": currentPoint
+        };
 
         if (currentPoint <= 3) {
             loadJSONFunc(fileToLoad, "file", that.JSONCallback);
@@ -135,10 +138,15 @@ function Map(loadJSONFunc) {
             // that.drawer = mapboxgl.Draw();
             // that.map.addControl(that.drawer);
             // drawer to draw a square and select points
-            var fileToLoad = currentPoint.toString();
+            // var fileToLoad = currentPoint.toString();
             // load in our sample json
             //that.disableInteractivity();
-            loadJSONFunc(fileToLoad, "file", that.JSONCallback);
+            // var fullQuery = {
+            //     "area": currentArea,
+            //     "fileChunk": 1
+            // };
+
+            // loadJSONFunc(fullQuery, "file", that.JSONCallback);
         });
 
         // When a click event occurs near a marker icon, open a popup at the location of
@@ -155,9 +163,13 @@ function Map(loadJSONFunc) {
 
             var feature = features[0];
             var title = feature.properties.title;
+            var query = {
+                "area": currentArea,
+                "title": title
+            }
 
             // load displacements from server, and then show on graph
-            loadJSONFunc(title, "point", function(response) {
+            loadJSONFunc(query, "point", function(response) {
                 var json = JSON.parse(response);
 
                 // put code here, the dates are in dates variable, and points are in
@@ -326,10 +338,16 @@ function randomArray() {
 // function to use AJAX to load json from that same website - I looked online and AJAX is basically just used
 // to asynchronously load data using javascript from a server, in our case, our local website
 function loadJSON(arg, param, callback) {
-    console.log(arg);
+    var fullQuery = param + "/"
+
+    for (var key in arg) {
+        fullQuery += arg[key] + "/"
+    }
+
+    console.log(fullQuery);
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'geoJSON.php?' + param + "=" + arg, true); // Replace 'my_data' with the path to your file
+    xobj.open('GET', fullQuery, true); // Replace 'my_data' with the path to your file
     xobj.onreadystatechange = function() {
         if (xobj.readyState == 4 && xobj.status == "200") {
             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
